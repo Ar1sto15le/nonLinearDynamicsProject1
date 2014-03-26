@@ -1,0 +1,81 @@
+\documentclass[12pt]{article}
+\usepackage{inputenc}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{setspace}
+\usepackage{parskip}
+\setcounter{secnumdepth}{1}
+\pagestyle{plain}
+\usepackage{graphicx}
+\setlength{\parindent}{0 cm}
+\usepackage[compact]{titlesec}  
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref} % for urls in bibliography
+\usepackage{pdfpages} % to insert front page as pdf
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\titlespacing{\section}{0pt}{0pt}{0pt}
+
+% Bibliography Definition
+\makeatletter
+% \renewcommand\@biblabel[1]{#1} % No brackets for the references
+\def\@biblabel#1{}
+\renewenvironment{thebibliography}[1]
+     {\section*{\refname}%
+      \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin20pt% change 20 pt according to your needs
+            \advance\leftmargin\labelsep
+            \setlength\itemindent{-20pt}% change using the inverse of the length used before
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\renewcommand\newblock{\hskip .11em\@plus.33em\@minus.07em}
+\makeatother
+
+
+\begin{document}
+\includepdf{FrontPage_Project1.pdf}
+\input{part1}
+\input{part2}
+\input{part3}
+
+% Begin Bibliography
+\pagebreak
+\begingroup
+\renewcommand{\section}[2]{}	% in article, this becomes reference, so we suppress the normal \section\refname
+\centerline{\textbf{Bibliography}} 
+\begin{thebibliography}{9}
+\bibitem{Bifurcation}
+\url{Dictionary.com}. ``Bifurcate.'' \emph{Dictionary.com}. \url{http://dictionary.reference.com/browse/bifurcate}. (accessed March 26, 2014)
+\bibitem{Bifurcation}
+Weisstein, Eric W. ``Bifurcation.'' From MathWorld---A Wolfram Web Resource. \url{http://mathworld.wolfram.com/Bifurcation.html}
+\bibitem{Gearhart}
+Gearhart, William B. , and Mario Martelli. ``A Blood Cell Population Model, Dynamical Diseases, and Chaos.'' Department of Mathematics; California State University, Fullerton. \url{http://users.mat.unimi.it/users/naldi/cell.pdf} (accessed March 12, 2014).
+\bibitem{Lynch_1}
+Lynch, Stephen. ``Analysis of a Blood Cell Population Model.'' International Journal of Bifurcation and Chaos 15, no. 7 (2005): 2311-2316.
+\bibitem{Lynch_2}
+Lynch, Stephen. ``Chapter 12.'' \emph{Dynamical Systems with Applications Using Mathematica}. Boston, MA: Birkh\"{a}user, 2007. N. pag. Print.
+\bibitem{Strogatz}
+Strogatz, Steven H. ``12.2: The Henon Map.'' In \emph{Nonlinear Dynamics and Chaos: With Applications to Physics, Biology, Chemistry, and Engineering}. Reading, MA: Addison-Wesley Pub., 1994.
+\bibitem{Anemia}
+``What Is Anemia?.'' - NHLBI, NIH. \url{https://www.nhlbi.nih.gov/health/health-topics/topics/anemia/} (accessed March 22, 2014).
+\end{thebibliography}
+\endgroup
+
+\input{MatlabAppendix}
+
+\end{document}
+

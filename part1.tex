@@ -1,0 +1,33 @@
+\section*{Introduction}
+	
+	\emph{The blood cell population model is an excellent example of a discrete dynamical system taken from biology. It helps illustrate ``how mathematical modeling can be used to explain the behavior and possible origins of dynamical disease.''\footnote{William B. Gearheart, ``A Blood Cell Population Model Dynamical Disease, and Chaos,'' Department of Mathematics; California State University, Fullerton, n.d. Web. 12 Mar. 2014. <\url{http://users.mat.unimi.it/users/naldi/cell.pdf}>} This project will attempt to illustrate the significance of this model as well as investigate its discrete dynamics in terms of stability and chaos.\footnote{Lynch, Stephen, ``Analysis of a Blood Cell Population Model,'' International Journal of Bifurcation and Chaos 15, no. 7 (2005), 2311.}} \footnote{Note: we have been asked to specify the work distribution for this project. Katrina contributed the background research, research on the applications of this model, the powerpoint presentation, the relevant section write-up and helped with compiling the report. Chris focused on the iterative numerics and trajectories, the bifurcation diagrams and wrote up the relevant sections. Gabe contributed the stability analysis of the fixed points, assisted in researching applications and historical significance, wrote up the relevant sections and compiled the final report.}
+
+	On average, the human body contains 5 liters of blood consisting of red blood cells, white blood cells, and platelets. There also exist several types of red and white blood cells. This presents an issue from a mathematical modeling perspective because the ``cellular and biochemical processes involved in [the cells’] dynamics vary considerably.''\footnote{Lynch, 2311.} Regardless of the challenges it presents, studying blood is extremely beneficial because it can be used to diagnose certain diseases in the human population such as ``anemia, chronic renal failure, acute hemorrhaging and marrow failure.''\footnote{Lynch, 2312.}
+	
+	Red blood cells, or erythrocytes, tend to fluctuate in a healthy human body: woman having 4.2-5.4 per $\mu$L and men 4.7-6.1 per $\mu$L.\footnote{Steven H. Strogatz, ``12.2: The Henon Map.'' In \emph{Nonlinear Dynamics and Chaos: With Applications to Physics, Biology, Chemistry, and Engineering}, Reading, MA: Addison-Wesley Pub., 1994, 50.} It is known that blood cell counts ``can oscillate and even display chaotic behavior'' which is not unexpected, for ``all kids of nonlinear phenomena abound in the human body.''\footnote{Lynch, 2311.} Through application of a blood cell model, these red blood cells can be counted to measure hematologic conditions such as anemia.\footnote{Anemia is a condition marked by a deficiency of red blood cells or of hemoglobin in the blood, resulting in pallor and weariness (\url{www.nhblbi.nih.gov}). It is also defined as, ``Any condition resulting in a significant decrease in total body erythrocyte mass'' (Lynch, p. 285).}\footnote{Strogatz, 59.} It is also helpful to point out that most blood cells are produced by ``primitive stem cells in bone marrow.''\footnote{Lynch, 2312.} The cells are then destroyed through processes such as natural aging, infection, or disease. This cyclic process is represented in the model as a nonlinear phenomenon. 
+	
+\section*{A Blood Cell Population Model}
+	
+	A simple blood cell population model was first developed by Polish mathematician, Andrzej Lasota, in 1977.\footnote{Strogatz, 59.} The model he considered was this:
+	
+	\begin{align}
+		c_{n+1} = c_{n} - d_{n} + p_{n}
+	\end{align}
+
+	where $c_{n}$ denotes the red cell count at time \emph{n}, and $d_{n}$ and $p_{n}$ represent the number of cells destroyed and produced in the interval, respectively. Furthermore, it is assumed that a constant fraction of cells is destroyed on each iteration, thus $d_{n} = ac_{n}$ where $0 < a \le 1$, and a represents the ``destruction coefficient.''  Also, consider the equation used by Lasota: 
+	
+	\begin{align}
+		p_{n} = bc_{n}^{r}e^{-sc_{n}}
+	\end{align}
+
+	where b, c, r, and s are positive constants. Together, these functions give us the blood cell iterative equation used in this project\footnote{Lynch, 2312.}:
+
+	\begin{align*}
+		c_{n+1} &= (1-a)c_{n} + bc_{n}^{r}e^{-sc_{n}} \text{ where } \\
+		0 &<  a \le 1 \text{ and } b, r, s > 0.
+	\end{align*}
+
+	The typical parameters used in the model are $b = 1.1 x 10^{6}$, $r = 8$, and $s = 16$. The analysis of this model is presented in the following sections of this project. Fixed points of period one and the stability of these points will be examined. To supplement the linear stability analysis, bifurcation diagrams will also be plotted as parameters change.\footnote{Lynch, 2314.} This will be implemented through MATLAB.
+
+\section*{Brief Summary}
+	Blood Cell Modeling can be utilized in order to explain the behavior and possible origins of dynamical diseases in the human population, such as anemia. A stability analysis can be carried out for a simple blood cell population model, as this project will attempt to demonstrate. Furthermore, bifurcation diagrams can be used to ``establish how the model’s dynamics evolve as parameters vary.'' Please refer to the following sections. 

@@ -1,0 +1,45 @@
+
+% Set Parameters
+a = .2;
+b = 1.1*10^6;
+r = 8;
+s = 16;
+
+% Define Functions and Derivatives
+syms x
+
+f = symfun((1-a)*x+b*x^(r)*exp(-s*x),[x]);
+derivf = diff(f);
+
+a = .3;
+g = symfun((1-a)*x+b*x^(r)*exp(-s*x),[x]);
+derivg = diff(g);
+
+y = symfun(x,[x]);
+
+% Plot Graphs
+
+h1 = ezplot(f,[-.01,1])
+hold on
+h2 = ezplot(y,[-.01,1])
+set(h1,'color','r','linestyle','--')
+legend('f(x)','y = x')
+xlabel('x')
+ylabel('f(x) and y(x)')
+title('f(x) = (1-a)*x+b*x^(r)*exp(-s*x) against y(x) = x')
+
+hold off
+
+h3 = ezplot(g,[-.01,1])
+hold on
+h4 = ezplot(y,[-.01,1])
+set(h3,'color','r','linestyle','--')
+legend('g(x)','y = x')
+xlabel('x')
+ylabel('g(x) and y(x)')
+title('g(x) = (1-a)*x+b*x^(r)*exp(-s*x) against y(x) = x')
+
+
+
+
+

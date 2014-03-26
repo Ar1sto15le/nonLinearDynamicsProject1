@@ -1,0 +1,358 @@
+\pagebreak{} % so we do not overlap with bibliography
+\section*{MATLAB Appendix: \\ Scripts for Generating Bifurcation Diagrams and Iterative Numerics}
+
+\begin{verbatim}
+function bloodModelVaryac0(steps,b,r,s)
+
+% Pressing "Run" button uses the below values as the inputs
+%   for the function.
+if(nargin==0)
+    steps=200;
+    b=1.1*10.^6;
+    r=8;
+    s=16;
+end
+
+ICs=10; % Number of initial conditions
+c0=linspace(0,1,ICs); % Initial conditions tested between 0 and 1.5
+runs=70; % Number of different `a' values to test
+a=linspace(.6,.75,runs).'; % Linearly spaced vector of `a' values
+cn=zeros([1, steps]); 
+
+%Starts clock on main loop
+t=cputime;
+
+% Loop through initial condition values
+for k=1:ICs
+    cn(1)=c0(k);    
+    % Loop through the `a' values
+    for j=1:runs    
+        % Loop through the first (steps-50) steps
+        for i=1:steps-50
+        cn(i+1)=(1-a(j)).*cn(i)+b*cn(i).^r*exp(-s*cn(i));
+    end
+    
+    % Plots new data on the same graph
+    hold on
+    
+    % Loop through final steps while plotting bifurcation diagram.
+    % Plotting just these steps ensures that we only use values that 
+    %   are in the periodic orbits that the map converges to for a given
+    %   `a'.
+    for i=steps-50:steps
+        cn(i+1)=(1-a(j)).*cn(i)+b*cn(i).^r*exp(-s*cn(i));
+        plot(a(j), cn(i),`-', `MarkerSize',2);
+    end
+    end
+end
+% Determines how long the main loop takes to run
+loopTime=cputime-t;
+display(loopTime);
+
+xlabel(` a ');
+ylabel(` c_n for last 50 values')
+title(`Bifurcation diagram found by varying ``a''');
+
+end
+
+---
+
+function bloodModelr5(c0,steps,b,r,s)
+
+% Pressing ``Run'' button uses the below values as the inputs
+%   for the function.
+if(nargin==0)
+    c0=1; % Initial condition
+    steps=100; % Number of iterations of the map
+    b=1.1*10.^6; % Value of parameter given in part (b)
+    r=4.9;         % "                                  "
+    s=16;        % "                                  "
+end
+
+a=.2; % Value given in part (b)
+% a=.3;  % Value given in part (c) 
+cn=zeros([1,steps]); % Create a vector to hold value at each step
+cn(1)=c0; % Initial condition
+    
+% Main loop to generate iterative map
+for i=1:steps
+    cn(i+1)=(1-a).*cn(i)+b*cn(i).^r*exp(-s*cn(i));
+end
+
+% Simple plot of result
+figure
+plot(cn(:));
+end
+
+---
+function bloodModelSimple(c0,steps)
+
+if(nargin==0)
+    c0=linspace(0,1,50);
+    steps=20;
+end
+a=.3;
+b=1.1*10.^6;
+s=16;
+r=8;
+cn=zeros([1 steps]);
+xlabel(`iteration');
+ylabel(`c_n');
+title(`Iterative map with varying initial conditions');
+for k=1:50
+    cn(1)=c0(k);
+    for j=1:steps
+        cn(j+1)=(1-a).*cn(j)+b*cn(j).^r*exp(-s*cn(j));
+    end
+    hold on
+    plot(cn,`-');
+end
+end
+
+---
+function bloodModelSinglea(c0,steps,b,r,s)
+
+if(nargin==0)
+    c0=1.5;
+    steps=1000;
+    b=1.1*10.^6;
+    r=8;
+    s=16;
+end
+
+runs=200;
+a=linspace(0,1,runs).';
+cn=zeros([1, steps]);
+cn(1)=c0;
+
+for j=1:runs
+    
+    for i=1:steps-100
+        cn(i+1)=(1-a(j)).*cn(i)+b*cn(i).^r*exp(-s*cn(i));
+    end
+    hold on
+    for i=steps-100:steps
+        plot(a(j), cn(i),`-', `MarkerSize',2);
+    end
+end
+end
+
+
+---
+
+function bloodModelVaryA(c0,steps,b,r,s)
+
+% Pressing "Run" button uses the below values as the inputs
+%   for the function.
+if(nargin==0)
+    c0=1.5;
+    steps=300;
+    b=1.1*10.^6;
+    r=8;
+    s=16;
+end
+
+runs=500; % Number of different `a' values to test
+a=linspace(0,1,runs).'; % Linearly spaced vector of `a' values
+cn=zeros([1, steps]); 
+cn(1)=c0;
+
+% Loop through the `a' values
+for j=1:runs
+    
+    % Loop through the first (steps-50) steps
+    for i=1:steps-50
+        cn(i+1)=(1-a(j)).*cn(i)+b*cn(i).^r*exp(-s*cn(i));
+    end
+    
+    % Plots new data on the same graph
+    hold on
+    
+    % Loop through final steps while plotting bifurcation diagram.
+    % Plotting just these steps ensures that we only use values that 
+    %   are in the periodic orbits that the map converges to for a given
+    %   `a'.
+    for i=steps-50:steps
+        cn(i+1)=(1-a(j)).*cn(i)+b*cn(i).^r*exp(-s*cn(i));
+        plot(a(j), cn(i),`-', `MarkerSize',2);
+    end
+end
+
+xlabel(` a ');
+ylabel(` c_n for last 100 n values')
+title(`Bifurcation diagram found by varying "a"');
+
+end
+
+
+---
+
+function bloodModelVaryac0(steps,b,r,s)
+
+% Pressing "Run" button uses the below values as the inputs
+%   for the function.
+if(nargin==0)
+    steps=200;
+    b=1.1*10.^6;
+    r=8;
+    s=16;
+end
+
+ICs=10; % Number of initial conditions
+c0=linspace(0,1,ICs); % Initial conditions tested between 0 and 1.5
+runs=70; % Number of different `a' values to test
+a=linspace(0,1,runs).'; % Linearly spaced vector of `a' values
+cn=zeros([1, steps]); 
+
+%Starts clock on main loop
+t=cputime;
+
+% Loop through initial condition values
+for k=1:ICs
+    cn(1)=c0(k);    
+    % Loop through the `a' values
+    for j=1:runs    
+        % Loop through the first (steps-50) steps
+        for i=1:steps-50
+        cn(i+1)=(1-a(j)).*cn(i)+b*cn(i).^r*exp(-s*cn(i));
+    end
+    
+    % Plots new data on the same graph
+    hold on
+    
+    % Loop through final steps while plotting bifurcation diagram.
+    % Plotting just these steps ensures that we only use values that 
+    %   are in the periodic orbits that the map converges to for a given
+    %   `a'.
+    for i=steps-50:steps
+        cn(i+1)=(1-a(j)).*cn(i)+b*cn(i).^r*exp(-s*cn(i));
+        plot(a(j), cn(i),`-', `MarkerSize',2);
+    end
+    end
+end
+% Determines how long the main loop takes to run
+loopTime=cputime-t;
+display(loopTime);
+
+xlabel(` a ');
+ylabel(` c_n for last 50 values')
+title(`Bifurcation diagram found by varying ``a''');
+
+end
+
+---
+
+function bloodModelvaryr(c0,steps,b,s)
+
+% Pressing "Run" button uses the below values as the inputs
+%   for the function.
+if(nargin==0)
+    c0=.5; % Initial condition
+    steps=300; % Number of iterations of the map
+    b=1.1*10.^6; % Value of parameter given in part (b)
+    s=16;        % "                                  "
+end
+
+rVals=300;
+r=linspace(0,10,rVals);
+% a=.2; % Value given in part (b)
+a=.3;  % Value given in part (c) 
+cn=zeros([1,steps]); % Create a vector to hold value at each step
+cn(1)=c0; % Initial condition
+
+t=cputime;
+% Main loop to generate iterative map
+for k=1:rVals
+    
+    for i=1:steps-100
+        cn(i+1)=(1-a).*cn(i)+b*cn(i).^r(k)*exp(-s*cn(i));
+    end
+    hold on
+    for i=steps-100:steps
+        cn(i+1)=(1-a).*cn(i)+b*cn(i).^r(k)*exp(-s*cn(i));
+        plot(r(k),cn(i),`-', `MarkerSize',2);
+    end
+end
+loopTime=cputime-t;
+display(loopTime);
+xlabel(` r ');
+ylabel(` c_n for last 50 values')
+title(`Bifurcation diagram found by varying "r"');
+end
+
+---
+
+function bloodModelVarys(c0,steps,b,r)
+
+% Pressing "Run" button uses the below values as the inputs
+%   for the function.
+if(nargin==0)
+    c0=.5; % Initial condition
+    steps=200; % Number of iterations of the map
+    
+    b=1.1*10.^6; % Value of parameter given in part (b)
+    r= 8;        % "                                  "
+    % s=16;        % "                                  "
+end
+
+sVals=200;
+s=linspace(8,20,sVals);
+% a=.2; % Value given in part (b)
+a=.3;  % Value given in part (c) 
+cn=zeros([1,steps]); % Create a vector to hold value at each step
+cn(1)=c0; % Initial condition
+
+t=cputime;
+% Main loop to generate iterative map
+for k=1:sVals
+    
+    for i=1:steps-20
+        cn(i+1)=(1-a).*cn(i)+b*cn(i).^r*exp(-s(k)*cn(i));
+    end
+    hold on
+    for i=steps-20:steps
+        cn(i+1)=(1-a).*cn(i)+b*cn(i).^r*exp(-s(k)*cn(i));
+        plot(s(k),cn(i),`-', `MarkerSize',2);
+    end
+end
+loopTime=cputime-t;
+display(loopTime);
+xlabel(` r ');
+ylabel(` c_n for last 20 values')
+title(`Bifurcation diagram found by varying "s"');
+end
+
+---
+
+function c0findBifurcation
+    format long
+    upper=.2;
+    lower=.1;
+    steps=50;
+    a=.3;
+    b=1.1*10.^6;
+    s=16;
+    r=8;
+    cn=zeros([1 steps]);
+    c0=.15;
+    tol = 1*10.^(-13);
+    c0temp=1;
+    while abs(c0temp-c0) > tol
+        
+        cn(1)=c0;
+        for j=1:steps-1
+            cn(j+1)=(1-a).*cn(j)+b*cn(j).^r*exp(-s*cn(j));
+        end
+        if cn(steps)< .5
+            c0temp=c0;
+            lower=c0;
+            c0=(upper+c0)/2;
+        else
+            c0temp=c0;
+            upper=c0;
+            c0=(lower+c0)/2;
+        end
+    end
+    display(c0);
+
+\end{verbatim}
